@@ -1,9 +1,11 @@
-import { Button } from "@/components/ui/button";
+import React from 'react'
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <Button variant="destructive">
-      hello
-    </Button>
-  );
+    <div>
+      home page
+    </div>
+  )
 }
+
+export default HomePage
