@@ -1,31 +1,21 @@
-"use client"
-import { authClient } from '@/lib/auth-client'
-import React from 'react'
+import { auth } from "@/lib/auth"
+import HomeView from "@/modules/home/ui/views/home-view"
+import { redirect } from "next/navigation"
+import { headers } from "next/headers"
 
-const HomePage = () => {
-   const { 
-        data: session,    
-    } = authClient.useSession() 
 
-    const username =session?.user.name 
- 
- 
-    if(session){
-    return <div>
-      <h1>
-        {username}
-      </h1>
-      <button onClick={() => authClient.signOut()}>
-        Log out
-      </button>
-    </div>
-  }
+const page = async () => {
+    const session = await auth.api.getSession({
+        headers:await headers(),
 
-  return (
-    <div>
-      home page
-    </div>
-  )
+    })
+
+    if(!session){
+        redirect("/sign-in")
+    }
+
+return <HomeView/>
+  
 }
 
-export default HomePage
+export default page

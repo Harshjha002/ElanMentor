@@ -55,6 +55,22 @@ const SignInView = () => {
         }
     )
     }
+    const onSocial = (provider:"github" | "google") => {
+        setError(null);
+        setPending(true);
+        authClient.signIn.social({
+            provider:provider,
+            callbackURL:"/"
+        },{
+            onSuccess:() => {
+                setPending(false);
+            },
+            onError:({error}) => {
+                setError(error.message)
+            }
+        }
+    )
+    }
 
   return (
     <div className='flex flex-col gap-6'>
@@ -138,6 +154,7 @@ const SignInView = () => {
                     variant="outline"
                     type='button'
                     className='w-full'
+                    onClick={() => onSocial("google")}
                     >
                         Google
                     </Button>
@@ -146,6 +163,7 @@ const SignInView = () => {
                     type='button'
                     className='w-full'
                     disabled={pending}
+                    onClick={() => onSocial("github")}
                     >
                         Github
                     </Button>
